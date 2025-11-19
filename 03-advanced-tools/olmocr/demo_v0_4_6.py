@@ -33,7 +33,7 @@ def convert_pdf_v046(pdf_path):
             "--pdfs", str(pdf_path),
             "--max_page_error_rate", "0.3",  # 允許30%頁面錯誤率
             "--gpu_memory_utilization", "0.7",  # vLLM GPU 記憶體使用率
-            "--max_model_len", "2048",  # 限制 context 長度
+            "--max_model_len", "8192",  # 增加 context 長度以支持 8000 token 輸出
             "--tensor_parallel_size", "1",  # 單 GPU
             "--data_parallel_size", "1",  # 無 data parallelism
         ]

@@ -6,6 +6,63 @@ olmOCR (Open Language Model OCR) 是 AllenAI 開發的 OCR 工具，特別適合
 
 參考：[olmOCR GitHub](https://github.com/allenai/olmocr)
 
+## ⚠️ 版本問題與解決記錄
+
+### 重大更新：olmOCR v0.4.6 (2025-11-20)
+
+**重要變更**：
+- **後端切換**：從 SGLang 切換到 vLLM
+- **新依賴**：需要 flash-attn >= 2.8.3
+- **配置變更**：需要適當設定 max_model_len 以支持長文本輸出
+
+**已知問題與解決方案**：
+
+1. **flash-attn 缺失錯誤**：
+   ```
+   ModuleNotFoundError: No module named 'flash_attn.flash_attn_interface'
+   ```
+   **解決**：`uv pip install flash-attn --no-build-isolation`
+
+2. **max_tokens 過大錯誤**：
+   ```
+   ValueError: 'max_tokens' is too large: 8000. This model's maximum context length is 2048 tokens
+   ```
+   **解決**：設定 `--max_model_len 8192` 或更高
+
+3. **建議配置** (v0.4.6):
+   ```bash
+   # 成功的依賴組合
+   olmocr==0.4.6
+   vllm==0.11.0
+   flash-attn==2.8.3
+   torch==2.9.1+cu128
+   ```
+
+### 歷史版本問題 (v0.1.58)
+
+**SGLang 後端問題**：
+- 記憶體配置困難，經常遇到 SIGKILL (-9)
+- SGLang server 連接不穩定
+- 版本兼容性複雜
+
+**已棄用檔案**：
+- `demo.py`: 原始 SGLang 實現（已修正兼容性警告）
+- `demo_fixed.py`: SGLang 優化版（仍有記憶體問題）
+- `demo_simple.py`: 簡化 SGLang 版本（失敗）
+
+### 當前推薦配置
+
+**✅ 可用實現**：
+- **demo_v0_4_6.py**: 適配 olmOCR v0.4.6 + vLLM + flash-attn
+
+**環境要求**：
+```bash
+olmocr==0.4.6
+vllm==0.11.0
+flash-attn==2.8.3
+torch>=2.9.1+cu128
+```
+
 ## 特點
 
 - ✅ **掃描文檔準確率高**：對掃描版 PDF 的準確率可達 90%
