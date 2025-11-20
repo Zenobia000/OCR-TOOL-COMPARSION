@@ -53,7 +53,8 @@ olmOCR (Open Language Model OCR) 是 AllenAI 開發的 OCR 工具，特別適合
 ### 當前推薦配置
 
 **✅ 可用實現**：
-- **demo_v0_4_6.py**: 適配 olmOCR v0.4.6 + vLLM + flash-attn
+- **demo.py**: 主程序，支持單一檔案輸入，適配 olmOCR v0.4.6
+- **demo_v0_4_6.py**: 測試版本，固定處理 CLIP paper
 
 **環境要求**：
 ```bash
@@ -61,6 +62,21 @@ olmocr==0.4.6
 vllm==0.11.0
 flash-attn==2.8.3
 torch>=2.9.1+cu128
+```
+
+**使用方法** (v0.4.6):
+```bash
+# 處理指定 PDF 檔案
+python demo.py /path/to/your/document.pdf
+
+# 使用預設測試檔案
+python demo.py
+
+# 功能特點：
+# - 自動生成 Markdown 和 JSON 輸出
+# - 45分鐘超時設定（適合大型文檔）
+# - 詳細的處理進度和結果統計
+# - 支持命令列參數靈活輸入
 ```
 
 ## 特點
@@ -278,8 +294,13 @@ cd 03-advanced-tools
 # 啟動公用環境
 source .venv/bin/activate
 
-# 運行 olmocr
+# 運行 olmOCR (新版本 v0.4.6)
 cd olmocr
+
+# 處理特定 PDF 檔案
+python demo.py /path/to/your/document.pdf
+
+# 或使用預設測試檔案
 python demo.py
 ```
 
